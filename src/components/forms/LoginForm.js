@@ -31,7 +31,7 @@ class LoginForm extends React.Component {
         const errors = this.validate(this.state.data);
         this.setState({errors});
 
-        //check if errors = 0... 
+        //check if no errors submit the form...
         if(Object.keys(errors).length === 0){
             this.props.submit(this.state.data);
         }
