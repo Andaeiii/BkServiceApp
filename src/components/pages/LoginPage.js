@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';          // used to connect this function to redux.. 
 import LoginForm from '../forms/LoginForm';
+
+import { login } from '../../actions/auth';
+
 
 
 // const LoginPage = () => (
@@ -12,7 +17,9 @@ import LoginForm from '../forms/LoginForm';
 class LoginPage extends React.Component{
 
     processLoginForm = (data) => {
-        console.log(data);
+        this.props.login(data).then(() => {
+            this.props.history.push("/");       
+        })
     }
 
     render (){
@@ -26,4 +33,18 @@ class LoginPage extends React.Component{
 }
 
 
-export default LoginPage
+//so here we define what the component needs... 
+//it needs history object with the push method... 
+
+LoginPage.propTypes = {
+    history: PropTypes.shape({
+        push: PropTypes.func.isRequired
+    }).isRequired,
+
+    login: PropTypes.func.isRequired
+};
+
+//param - that allows to pass from redux state to this component... 
+//second - functions to be despatched out of the component... 
+
+export default connect(null, { login })(LoginPage);
